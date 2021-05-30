@@ -5,8 +5,7 @@ import numpy as np
 import sympy as sym
 import matplotlib.pyplot as plt
 
-t = sym.Symbol("t")
-y = sym.Symbol("y")
+t, y = sym.symbols("t y")
 
 
 # Método de Euler
@@ -176,6 +175,8 @@ def ODEs_superior(ODE, t0s, y0s, hs, ns, orden):
 # Pintar ejemplo de ODE con cada método (problema de valor inicial)
 def ejemplo(ODE, analitica, t0, y0, hs, tn, mostrar):
     """
+    Entrada: una Ecuación Diferencial Ordinaria ODE(t, y)
+    Salida: 
     """
 
     x_funcion = np.linspace(t0, tn, 1000)
