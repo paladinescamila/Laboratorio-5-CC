@@ -12,6 +12,12 @@ y = sym.Symbol("y")
 # Método de Euler
 def euler(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -29,6 +35,12 @@ def euler(ODE, t0, y0, h, tn):
 # Método de Serie de Taylor
 def taylor(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -49,6 +61,12 @@ def taylor(ODE, t0, y0, h, tn):
 # Método de Runge-Kutta (orden 2)
 def runge_kutta_2(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -68,6 +86,12 @@ def runge_kutta_2(ODE, t0, y0, h, tn):
 # Método de Runge-Kutta (orden 4)
 def runge_kutta_4(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -89,6 +113,12 @@ def runge_kutta_4(ODE, t0, y0, h, tn):
 # Método Multipaso (2 pasos)
 def multipaso_2(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -108,6 +138,12 @@ def multipaso_2(ODE, t0, y0, h, tn):
 # Método Multipaso (4 pasos)
 def multipaso_4(ODE, t0, y0, h, tn):
     """
+    Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
+            t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
+            h que representa el incremento de t, y un real tn que es el límite
+            superior del intervalo de aplicación.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            t0 <= tk <= tn.
     """
 
     f = sym.lambdify([t, y], ODE)
@@ -132,7 +168,7 @@ def ODEs_superior(ODE, t0s, y0s, hs, ns, orden):
     """
     pasos = []
     for i in range(orden):
-        pasos = runge_kutta_4(ODE, t0[i], y0[i], hs[i], n[i])
+        pasos = runge_kutta_4(ODE, t0s[i], y0s[i], hs[i], ns[i])
 
     print("aiuda")
 
@@ -275,7 +311,7 @@ def main():
     ODE = y
     analitica = np.e**t
     hs = [0.1, 0.2, 0.3, 0.4]
-    ejemplo(ODE, analitica, 0, 1, hs, 10, True)
+    ejemplo(ODE, analitica, 0, 1, hs, 5, True)
 
     # ODE = -2*t*y**2
     # analitica = 1 / (1+t**2)
