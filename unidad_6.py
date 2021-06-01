@@ -187,25 +187,53 @@ def ODEs_superior(ODE, t0, y0s, tf, h, n):
 
 
 # Método de Diferencias Finitas
-def diferencias_finitas(ODE, t0, y0, tf, yf, n):
+def diferencias_finitas(ODE, t0, y0, tf, yf, n): # ¿VARIAMOS N O H?
     """
     """
 
     ti = np.linspace(t0, tf, n)
-    f = sym.lambdify([t], ODE) # ¿DEPENDE SÓLO DE t?
-    h = (tf - t0) / (n-1)
+    f = sym.lambdify(t, ODE) # ¿DEPENDE SÓLO DE t? (ES OPCIONAL SI SE QUIERE METER UNA Y')
+    h = (tf - t0) / (n - 1)
 
-    A = [[0 for _ in range(n-2)] for _ in range(n-2)]
-    B = [f(ti[i])*h**2 for i in range(1, n-1)]
+    A = [[0 for _ in range(n - 2)] for _ in range(n - 2)]
+    b = [f(ti[i])*h**2 for i in range(1, n - 1)]
     
-    for i in range(1, n-1):
+    for i in range(1, n - 1):
 
         j = i - 1
         A[j][j] = -2
 
-        if (i == 1): B[j] -= y0
-        if (i == n - 2): B[j] -= yf
+        if (i == 1): b[j] -= y0
+        if (i == n - 2): b[j] -= yf
         if (i > 1): A[j][j-1] = 1
         if (i < n-2): A[j][j+1] = 1
     
-    return np.linalg.solve(A, B)
+    yi = [y0] + list (np.linalg.solve(A, b)) + [yf]
+    pasos = [(ti[i], yi[i]) for i in range(n)] # ¿SERÁ NECESARIO HACERLO AQUÍ?
+    
+    return pasos
+
+
+# Método de Elementos Finitos
+def elementos_finitos(ODE, t0, y0, tf, yf, n):
+    """
+    """
+
+    ti = np.linspace(t0, tf, n)
+    f = sym.lambdify(t, ODE)
+    A, b = [], []
+    coheficientes_ypp = [i for i in range(n)]
+
+    A.append([t0**i for i in range(n)])
+    # PARTE DONDE SE AGREGAN LOS DEMÁS COHEFICIENTES
+    A.append([tf**i for i in range(n)])
+
+    b.append(y0)
+    # PARTE DONDE SE AGREGAN LOS DEMÁS VALORES DE B
+    b.append(yf)
+
+
+ODE = 6*t # EN EL LABORATORIO NO SE PUEDEN PONER POLINOMIOS
+analitica = t**3
+t0, y0, tf, yf = 0, 0, 1, 1
+elementos_finitos(ODE, t0, y0, tf, yf, 5)
