@@ -14,7 +14,7 @@ def euler(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -37,7 +37,7 @@ def taylor(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -63,7 +63,7 @@ def runge_kutta_2(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -88,7 +88,7 @@ def runge_kutta_4(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -115,7 +115,7 @@ def multipaso_2(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -140,7 +140,7 @@ def multipaso_4(ODE, t0, y0, h, tn):
     Entrada: una Ecuación Diferencial Ordinaria de primer orden ODE(t, y), dos reales
             t0 & y0 que representan las condiciones iniciales y(t0) = y0, un real
             h que representa el incremento de t, y un real tn que es el límite
-            superior del intervalo de aplicación.
+            superior del intervalo de análisis.
     Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
             t0 <= tk <= tn.
     """
@@ -162,14 +162,26 @@ def multipaso_4(ODE, t0, y0, h, tn):
 
 
 # Resolución de Ecuaciones de Orden Superior
-def ODEs_superior(ODE, t0s, y0s, hs, ns, orden):
+def ODEs_superior(ODE, t0, y0s, h, tn, orden):
     """
     """
-    pasos = []
-    for i in range(orden):
-        pasos = runge_kutta_4(ODE, t0s[i], y0s[i], hs[i], ns[i])
+    
+    f = sym.lambdify([t, y], ODE)
+    pasos = [(t0, y0s)]
+    tk, yk = t0, [i for i in y0s]
 
-    print("aiuda")
+    while (tk < tn):
+        for i in range(orden-1, -1, -1):
+            k1 = f(tk, yk[i])*h
+            k2 = f(tk + h/2, yk[i] + k1/2)*h
+            k3 = f(tk + h/2, yk[i] + k2/2)*h
+            k4 = f(tk + h, yk[i] + k3)*h
+            yk[i] += (1/6) * (k1 + 2*k2 + 2*k3 + k4)
+        tk += h
+        pasos.append((tk, yk))
+    for i,j in pasos: print(i,j)
+    return pasos
+    
 
 
 # Pintar ejemplo de ODE con cada método (problema de valor inicial)
@@ -309,10 +321,18 @@ def ejemplo(ODE, analitica, t0, y0, hs, tn, mostrar):
 
 def main():
 
-    ODE = y
-    analitica = np.e**t
-    hs = [0.1, 0.2, 0.3, 0.4]
-    ejemplo(ODE, analitica, 0, 1, hs, 5, True)
+    # ODE = y
+    # analitica = np.e**t
+    # hs = [0.1, 0.2, 0.3, 0.4]
+    # ejemplo(ODE, analitica, 0, 1, hs, 5, True)
+
+    ODE = 2*t
+    t0 = 0
+    y0s = [6, 4, 2]
+    h = 0.01
+    tn = 1
+    orden = 3
+    ODEs_superior(ODE, t0, y0s, h, tn, orden)
 
     # ODE = -2*t*y**2
     # analitica = 1 / (1+t**2)
