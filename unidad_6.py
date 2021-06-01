@@ -214,7 +214,7 @@ def diferencias_finitas(ODE, t0, y0, tf, yf, n):
     return pasos
 
 
-# Método de Elementos Finitos
+# Método de Elementos Finitos (Colocación)
 def elementos_finitos(ODE, t0, y0, tf, yf, n):
     """
     """

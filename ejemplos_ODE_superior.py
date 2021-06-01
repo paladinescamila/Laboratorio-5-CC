@@ -58,7 +58,7 @@ def ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
         print("------------------------------------------------------\n")
         plt.plot(x_funcion, y_analitica, color="black", label="Analítica")
         plt.legend()
-        plt.xlabel('x')
+        plt.xlabel('t')
         plt.ylabel('y')
         plt.grid()
         plt.show()
