@@ -165,30 +165,24 @@ def multipaso_4(ODE, t0, y0, h, tn):
 def ODEs_superior(ODE, t0, y0s, h, tn, orden):
     """
     """
-    
-    f = sym.lambdify([t, y], ODE)
-    pasos = [(t0, y0s)]
-    tk, yk = t0, [i for i in y0s]
+
+    pasos = [(t0, y0s[0])]
+    tk, yk = t0, list (y0s)
 
     while (tk < tn):
+        f = sym.lambdify([t, y], ODE)
         for i in range(orden-1, -1, -1):
-            k1 = f(tk, yk[i])*h
-            k2 = f(tk + h/2, yk[i] + k1/2)*h
-            k3 = f(tk + h/2, yk[i] + k2/2)*h
-            k4 = f(tk + h, yk[i] + k3)*h
-            yk[i] += (1/6) * (k1 + 2*k2 + 2*k3 + k4)
+            yk[i] += f(tk, yk[i])*h
+            f = sym.lambdify([t, y], yk[i])
         tk += h
-        pasos.append((tk, yk))
-    for i,j in pasos: print(i,j)
+        pasos.append((tk, yk[0]))
+        
     return pasos
-    
 
 
-# Pintar ejemplo de ODE con cada método (problema de valor inicial)
-def ejemplo(ODE, analitica, t0, y0, hs, tn, mostrar):
+# Pintar ejemplo de ODE con cada método (problema de valor inicial, orden 1)
+def ejemplo_ODE_1(ODE, analitica, t0, y0, hs, tn, mostrar):
     """
-    Entrada: una Ecuación Diferencial Ordinaria ODE(t, y)
-    Salida: 
     """
 
     x_funcion = np.linspace(t0, tn, 1000)
@@ -319,20 +313,76 @@ def ejemplo(ODE, analitica, t0, y0, hs, tn, mostrar):
     return analitica, resultados, tiempos, promedios, desviaciones
 
 
+# Pintar ejemplo de ODE (problema de valor inicial, orden superior)
+def ejemplo_ODE_superior(ODE, analitica, t0, y0s, hs, tn, orden, mostrar):
+    """
+    """
+
+    x_funcion = np.linspace(t0, tn, 1000)
+    f_analitica = sym.lambdify(t, analitica)
+    y_analitica = [f_analitica(i) for i in x_funcion]
+
+    nh = len(hs)
+    resultados, tiempos, promedios, desviaciones = [], [], [], []
+
+    if (mostrar):
+        
+        print("ODE = {}\ny".format(ODE)+"'"*orden+" = {}".format(analitica))
+        for i in range(orden):
+            print("y"+"'"*i+"({}) = {}".format(t0, y0s[i]))
+        print("tn = {}\nhs = {}".format(tn, hs))
+
+        colores = ["red", "purple", "green", "blue", "orange", "gray"]
+        if (nh > 6): colores = ["purple" for _ in range(nh)]
+    
+        plt.title("ODEs de orden superior")
+        print("------------------------------------------------------")
+        print("              ODEs DE ORDEN SUPERIOR {}              ".format(orden))
+        print("------------------------------------------------------")
+        print(" h\tTiempo\t\tError (Prom)\tError (Desv)")
+        print("------------------------------------------------------")
+
+    for i in range(nh):
+        
+        inicio = time.time()
+        pasos = ODEs_superior(ODE, t0, y0s, hs[i], tn, orden)
+        tiempo = time.time() - inicio
+
+        errores = [np.abs(yi - f_analitica(ti)) for ti, yi in pasos]
+        errores.pop(0)
+        promedio, desviacion = np.mean(errores), np.std(errores)
+
+        resultados.append(pasos)
+        tiempos.append(tiempo)
+        promedios.append(promedio)
+        desviaciones.append(desviacion)
+
+        if (mostrar):
+                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                .format(hs[i], tiempo, promedio, desviacion))
+                ts = [ti for ti, yi in pasos]
+                ys = [yi for ti, yi in pasos]
+                plt.plot(ts, ys, color=colores[i], label="h = "+str(hs[i]), marker="o", markersize=4)
+
+    if (mostrar):
+
+        print("------------------------------------------------------\n")   
+        # plt.plot(x_funcion, y_analitica, color="black", label="Analítica")
+        plt.legend()
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.grid()
+        plt.show()
+    
+    return resultados, tiempos, promedios, desviaciones
+
+
 def main():
 
     # ODE = y
     # analitica = np.e**t
     # hs = [0.1, 0.2, 0.3, 0.4]
-    # ejemplo(ODE, analitica, 0, 1, hs, 5, True)
-
-    ODE = 2*t
-    t0 = 0
-    y0s = [6, 4, 2]
-    h = 0.01
-    tn = 1
-    orden = 3
-    ODEs_superior(ODE, t0, y0s, h, tn, orden)
+    # ejemplo_ODE_1(ODE, analitica, 0, 1, hs, 5, True)
 
     # ODE = -2*t*y**2
     # analitica = 1 / (1+t**2)
@@ -342,5 +392,14 @@ def main():
     # analitica = 1 / (1+t**2)
     # print(multipaso_4(ODE, 0, 1, 0.25, 1))
 
+    ODE = 2*t
+    analitica = t # ESTA NO ES, CORREGIR
+    t0 = 0
+    y0s = [6, 4, 2]
+    hs = [0.01, 0.02, 0.03, 0.04, 0.05]
+    tn = 100
+    orden = 3
+    ejemplo_ODE_superior(ODE, analitica, t0, y0s, hs, tn, orden, True)
 
-main()
+
+# main()
