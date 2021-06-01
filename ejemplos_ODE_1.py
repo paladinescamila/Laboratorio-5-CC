@@ -3,11 +3,11 @@
 from unidad_6 import *
 
 
-def ejemplo_ODE_1(ODE, analitica, t0, y0, hs, tn, mostrar):
+def ejemplo_ODE_1(ODE, analitica, t0, y0, tf, hs, mostrar):
     """
     """
 
-    x_funcion = np.linspace(t0, tn, 1000)
+    x_funcion = np.linspace(t0, tf, 1000)
     f_analitica = sym.lambdify(t, analitica)
     y_analitica = [f_analitica(i) for i in x_funcion]
 
@@ -20,7 +20,7 @@ def ejemplo_ODE_1(ODE, analitica, t0, y0, hs, tn, mostrar):
     if (mostrar):
         
         print("ODE = {}\ny(t) = {}".format(ODE, analitica))
-        print("y({}) = {}\ntn = {}\nhs = {}".format(t0, y0, tn, hs))
+        print("y({}) = {}\ntf = {}\nhs = {}".format(t0, y0, tf, hs))
 
         t_metodos, p_metodos, d_metodos, y_metodos = [], [], [], []
         colores = ["red", "purple", "green", "blue", "orange", "gray"]
@@ -43,32 +43,32 @@ def ejemplo_ODE_1(ODE, analitica, t0, y0, hs, tn, mostrar):
 
             if (i == 0):
                 inicio = time.time()
-                pasos = euler(ODE, t0, y0, hs[j], tn)
+                pasos = euler(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
 
             elif (i == 1):
                 inicio = time.time()
-                pasos = taylor(ODE, t0, y0, hs[j], tn)
+                pasos = taylor(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
 
             elif (i == 2):
                 inicio = time.time()
-                pasos = runge_kutta_2(ODE, t0, y0, hs[j], tn)
+                pasos = runge_kutta_2(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
             
             elif (i == 3):
                 inicio = time.time()
-                pasos = runge_kutta_4(ODE, t0, y0, hs[j], tn)
+                pasos = runge_kutta_4(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
             
             elif (i == 4):
                 inicio = time.time()
-                pasos = multipaso_2(ODE, t0, y0, hs[j], tn)
+                pasos = multipaso_2(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
             
             else:
                 inicio = time.time()
-                pasos = multipaso_4(ODE, t0, y0, hs[j], tn)
+                pasos = multipaso_4(ODE, t0, y0, tf, hs[j])
                 tiempo = time.time() - inicio
 
             errores = [np.abs(yi - f_analitica(ti)) for ti, yi in pasos]
@@ -141,7 +141,7 @@ def main():
     ODE = y
     analitica = np.e**t
     hs = [0.1, 0.2, 0.3, 0.4]
-    ejemplo_ODE_1(ODE, analitica, 0, 1, hs, 5, True)
+    ejemplo_ODE_1(ODE, analitica, 0, 1, 5, hs, True)
 
 
 main()

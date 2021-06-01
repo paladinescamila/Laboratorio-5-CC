@@ -3,11 +3,11 @@
 from unidad_6 import *
 
 
-def ejemplo_ODE_superior(ODE, analitica, t0, y0s, hs, tn, orden, mostrar):
+def ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     """
     """
 
-    x_funcion = np.linspace(t0, tn, 1000)
+    x_funcion = np.linspace(t0, tf, 1000)
     f_analitica = sym.lambdify(t, analitica)
     y_analitica = [f_analitica(i) for i in x_funcion]
 
@@ -16,17 +16,17 @@ def ejemplo_ODE_superior(ODE, analitica, t0, y0s, hs, tn, orden, mostrar):
 
     if (mostrar):
         
-        print("ODE = {}\ny".format(ODE)+"'"*orden+" = {}".format(analitica))
-        for i in range(orden):
+        print("ODE = {}\ny".format(ODE)+"'"*n+" = {}".format(analitica))
+        for i in range(n):
             print("y"+"'"*i+"({}) = {}".format(t0, y0s[i]))
-        print("tn = {}\nhs = {}".format(tn, hs))
+        print("tf = {}\nhs = {}".format(tf, hs))
 
         colores = ["red", "purple", "green", "blue", "orange", "gray"]
         if (nh > 6): colores = ["purple" for _ in range(nh)]
     
         plt.title("ODEs de orden superior")
         print("------------------------------------------------------")
-        print("              ODEs DE ORDEN SUPERIOR {}              ".format(orden))
+        print("              ODEs DE ORDEN SUPERIOR {}              ".format(n))
         print("------------------------------------------------------")
         print(" h\tTiempo\t\tError (Prom)\tError (Desv)")
         print("------------------------------------------------------")
@@ -34,7 +34,7 @@ def ejemplo_ODE_superior(ODE, analitica, t0, y0s, hs, tn, orden, mostrar):
     for i in range(nh):
         
         inicio = time.time()
-        pasos = ODEs_superior(ODE, t0, y0s, hs[i], tn, orden)
+        pasos = ODEs_superior(ODE, t0, y0s, tf, hs[i], n)
         tiempo = time.time() - inicio
 
         errores = [np.abs(yi - f_analitica(ti)) for ti, yi in pasos]
@@ -70,10 +70,10 @@ def main():
 
     # EJEMPLO 1
     ODE = 2*t
-    analitica = t # ESTA NO ES, CORREGI
+    analitica = t # ESTA NO ES, CORREGIR
     y0s = [6, 4, 2]
     hs = [0.01, 0.02, 0.03, 0.04, 0.05]
-    ejemplo_ODE_superior(ODE, analitica, 0, y0s, hs, 100, 3, True)
+    ejemplo_ODE_superior(ODE, analitica, 0, y0s, 100, hs, 3, True)
 
 
 main()
