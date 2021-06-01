@@ -56,7 +56,7 @@ def ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     if (mostrar):
 
         print("------------------------------------------------------\n")
-        # plt.plot(x_funcion, y_analitica, color="black", label="Analítica")
+        plt.plot(x_funcion, y_analitica, color="black", label="Analítica")
         plt.legend()
         plt.xlabel('x')
         plt.ylabel('y')
@@ -68,12 +68,11 @@ def ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
 
 def main():
 
-    # EJEMPLO 1
-    ODE = 2*t
-    analitica = t # ESTA NO ES, CORREGIR
-    y0s = [6, 4, 2]
-    hs = [0.01, 0.02, 0.03, 0.04, 0.05]
-    ejemplo_ODE_superior(ODE, analitica, 0, y0s, 100, hs, 3, True)
+    ODE = 180*t**2 + 30
+    analitica = 3*t**5 + 5*t**3 + 10
+    y0s = [0, 0, 30]
+    hs = [0.5, 1, 2, 2.5]
+    ejemplo_ODE_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
 
 
 main()
