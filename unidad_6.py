@@ -187,7 +187,25 @@ def ODEs_superior(ODE, t0, y0s, tf, h, n):
 
 
 # Método de Diferencias Finitas
-def diferencias_finitas(ODE, a, alfa, b, beta, h, n):
+def diferencias_finitas(ODE, t0, y0, tf, yf, n):
     """
     """
-    print("aiuda")
+
+    ti = np.linspace(t0, tf, n)
+    f = sym.lambdify([t], ODE) # ¿DEPENDE SÓLO DE t?
+    h = (tf - t0) / (n-1)
+
+    A = [[0 for _ in range(n-2)] for _ in range(n-2)]
+    B = [f(ti[i])*h**2 for i in range(1, n-1)]
+    
+    for i in range(1, n-1):
+
+        j = i - 1
+        A[j][j] = -2
+
+        if (i == 1): B[j] -= y0
+        if (i == n - 2): B[j] -= yf
+        if (i > 1): A[j][j-1] = 1
+        if (i < n-2): A[j][j+1] = 1
+    
+    return np.linalg.solve(A, B)
