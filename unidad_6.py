@@ -235,15 +235,18 @@ def elementos_finitos(ODE, t0, y0, tf, yf, n):
     A, b = [], []
 
     for i in range(n):
-        if (i == 0): coheficientes = [t0**i for i in range(n)]
-        elif (i == n-1): coheficientes = [tf**i for i in range(n)]
-        else: coheficientes = [j*(j-1)*ti[i]**(j-2) for j in range(n)]
-        A.append(coheficientes)
-    
-    for i in range(n):
-        if (i == 0): b.append(y0)
-        elif (i == n-1): b.append(yf)
-        else: b.append(f(ti[i]))
+        
+        if (i == 0):
+            A.append([t0**j for j in range(n)])
+            b.append(y0)
+
+        elif (i == n - 1):
+            A.append([tf**j for j in range(n)])
+            b.append(yf)
+
+        else:
+            A.append([j*(j-1)*ti[i]**(j-2) for j in range(n)])
+            b.append(f(ti[i]))
 
     coef = np.linalg.solve(A, b)
     polinomio = sum([coef[i]*t**i for i in range(n)])
