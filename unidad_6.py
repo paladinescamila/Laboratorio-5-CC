@@ -189,6 +189,12 @@ def ODEs_superior(ODE, t0, y0s, tf, h, n):
 # Método de Diferencias Finitas
 def diferencias_finitas(ODE, t0, y0, tf, yf, n):
     """
+    Entrada: una Ecuación Diferencial Ordinaria ODE de orden 2, cuatro reales 
+            t0, y0, tf, yf que representan las condiciones de frontera 
+            y(t0) = y0 & y(tf) = yf, y un entero n que indica la cantidad de puntos
+            que describen la solución, incluyendo los puntos inicial y final.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE, para
+            0 <= k <= n.
     """
 
     ti = np.linspace(t0, tf, n)
@@ -217,6 +223,11 @@ def diferencias_finitas(ODE, t0, y0, tf, yf, n):
 # Método de Elementos Finitos (Colocación)
 def elementos_finitos(ODE, t0, y0, tf, yf, n):
     """
+    Entrada: una Ecuación Diferencial Ordinaria ODE de orden 2, cuatro reales 
+            t0, y0, tf, yf que representan las condiciones de frontera 
+            y(t0) = y0 & y(tf) = yf, y un entero n que indica la cantidad de puntos
+            que describen la solución, incluyendo los puntos inicial y final.
+    Salida: la función polinomio que corresponden a la solución de la ODE.
     """
 
     ti = np.linspace(t0, tf, n)
