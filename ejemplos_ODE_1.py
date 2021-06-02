@@ -5,6 +5,14 @@ from unidad_6 import *
 
 def ejemplo_ODE_1(ODE, analitica, t0, y0, tf, hs, mostrar):
     """
+    Entrada: una Ecuación Diferencial Ordinaria ODE de orden 1, la solución 
+            analítica de la ODE, dos reales t0, y0, que representan las 
+            condiciones iniciales y(t0) = y0, un real tf que es el límite 
+            superior del intervalo de análisis, una lista de reales hs que son 
+            el incremento de t, y un booleano mostrar.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE para 
+            cada método y cada h, sus tiempos de ejecución, el promedio del 
+            error absoluto y la desviación del error.
     """
 
     x_funcion = np.linspace(t0, tf, 1000)

@@ -5,6 +5,14 @@ from unidad_6 import *
 
 def ejemplo_ODE_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
     """
+    Entrada: una Ecuación Diferencial Ordinaria ODE de orden 2, la solución 
+            analítica de la ODE, cuatro reales t0, y0, tf, yf que representan las 
+            condiciones de frontera y(t0) = y0 & y(tf) = yf, una lista de enteros 
+            ns que son la cantidad de puntos que hacen parte de la solución de la 
+            ODE, y un booleano mostrar.
+    Salida: los puntos (tk, yk) que corresponden a la solución de la ODE 
+            (t0 <= tk <= tf) para cada método y cada n, sus tiempos de ejecución, 
+            el promedio del error absoluto y la desviación del error.
     """
 
     x_funcion = np.linspace(t0, tf, 1000)
