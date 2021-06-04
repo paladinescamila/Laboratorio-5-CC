@@ -79,9 +79,6 @@ def ejemplo_ODE_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
             if (mostrar):
                 print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
                 .format(ns[j], tiempo, promedio, desviacion))
-                # plt.plot(t0, y0, color=colores[j], label="n = "+str(ns[j]), marker="o", markersize=4)
-                # for ti, yi in puntos:
-                #     plt.plot(ti, yi, color=colores[j], marker="o", markersize=4)
                 ts = [ti for ti, yi in puntos]
                 ys = [yi for ti, yi in puntos]
                 plt.plot(ts, ys, color=colores[j], label="n = "+str(ns[j]), marker="o", markersize=4)
@@ -118,9 +115,6 @@ def ejemplo_ODE_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         for i in range(2):
             print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
-            # plt.plot(t0, y0, color=colores[i], label=str(metodos[i]), marker="o", markersize=4)
-            # for ti, yi in y_metodos[i]:
-            #     plt.plot(ti, yi, color=colores[i], marker="o", markersize=4)
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
             plt.plot(ts, ys, color=colores[i], label=str(metodos[i]), marker="o", markersize=4)
