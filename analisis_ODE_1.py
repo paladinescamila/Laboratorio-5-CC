@@ -45,9 +45,7 @@ def graficar(x, y, color, title, xlabel, ylabel, label):
     plt.show()
 
 
-def imprimir(titulo, x, y, columnas):
-
-    c = list (columnas)
+def imprimir(titulo, x, y, c):
 
     print("------------------------------------------------------")
     print(" " + titulo)

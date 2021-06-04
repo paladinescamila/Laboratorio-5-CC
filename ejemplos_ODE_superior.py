@@ -84,4 +84,4 @@ def main():
     ejemplo_ODE_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
 
 
-main()
+# main()
