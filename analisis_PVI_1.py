@@ -1,10 +1,10 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs de orden 1)
 
 from unidad_6 import *
-from ejemplos_ODE_1 import ejemplo_ODE_1
+from ejemplos_PVI_1 import ejemplo_PVI_1
 
 
-def analisis_ODE_1(ODE, analitica, t0, y0, tf):
+def analisis_PVI_1(ODE, analitica, t0, y0, tf):
     
     print("ODE = {}".format(ODE))
 
@@ -18,7 +18,7 @@ def analisis_ODE_1(ODE, analitica, t0, y0, tf):
     tiempo = [[] for _ in range(6)]
 
     for i in hs:
-        _, t, p, d = ejemplo_ODE_1(ODE, analitica, t0, y0, tf, [i], False)
+        _, t, p, d = ejemplo_PVI_1(ODE, analitica, t0, y0, tf, [i], False)
         for j in range(6):
             promedio[j].append(p[j][0])
             desviacion[j].append(d[j][0])
@@ -65,18 +65,18 @@ def main():
     print("EJEMPLO 1")
     ODE = 2*t*sym.cos(t**2) - 2*sym.cos(t)
     analitica = sym.sin(t**2) - 2*sym.sin(t)
-    analisis_ODE_1(ODE, analitica, 0, 0, 6)
+    analisis_PVI_1(ODE, analitica, 0, 0, 6)
 
     print("EJEMPLO 2")
     ODE = 2**(sym.sin(t**2)/t)*(2*sym.cos(t**2) - sym.sin(t**2)/t**2)*sym.log(2)
     analitica = 2**(sym.sin(t**2)/t)
-    analisis_ODE_1(ODE, analitica, 1, 1.8, 4)
+    analisis_PVI_1(ODE, analitica, 1, 1.8, 4)
 
     print("EJEMPLO 3")
     ODE = (-t*sym.sin(t)*sym.cos(sym.cos(t)) + sym.sin(sym.sin(t))*sym.cos(t) + 
            sym.sin(sym.cos(t))) / ((t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))**2 + 1)
     analitica = sym.atan(t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))
-    analisis_ODE_1(ODE, analitica, 7.5, 1.01, 9)
+    analisis_PVI_1(ODE, analitica, 7.5, 1.01, 9)
 
 
 main()

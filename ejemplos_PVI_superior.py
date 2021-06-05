@@ -3,7 +3,7 @@
 from unidad_6 import *
 
 
-def ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
+def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden superior, la solución 
             analítica de la ODE, un real t0 y una lista de reales y0s, que 
@@ -81,7 +81,7 @@ def main():
     analitica = 3*t**5 + 5*t**3 + 10
     y0s = [0, 0, 30]
     hs = [0.5, 1, 2, 2.5]
-    ejemplo_ODE_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
+    ejemplo_PVI_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
 
 
 # main()

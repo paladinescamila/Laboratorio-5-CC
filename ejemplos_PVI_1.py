@@ -3,7 +3,7 @@
 from unidad_6 import *
 
 
-def ejemplo_ODE_1(ODE, analitica, t0, y0, tf, hs, mostrar):
+def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden 1, la solución 
             analítica de la ODE, dos reales t0, y0, que representan las 
@@ -143,20 +143,20 @@ def main():
     ODE = 2*t*sym.cos(t**2) - 2*sym.cos(t)
     analitica = sym.sin(t**2) - 2*sym.sin(t)
     hs = [0.1, 0.2, 0.4, 0.5]
-    ejemplo_ODE_1(ODE, analitica, 0, 0, 6, hs, True)
+    ejemplo_PVI_1(ODE, analitica, 0, 0, 6, hs, True)
 
     print("EJEMPLO 2")
     ODE = 2**(sym.sin(t**2)/t)*(2*sym.cos(t**2) - sym.sin(t**2)/t**2)*sym.log(2)
     analitica = 2**(sym.sin(t**2)/t)
     hs = [0.1, 0.2, 0.4, 0.5]
-    ejemplo_ODE_1(ODE, analitica, 1, 1.8, 4, hs, True)
+    ejemplo_PVI_1(ODE, analitica, 1, 1.8, 4, hs, True)
 
     print("EJEMPLO 3")
     ODE = (-t*sym.sin(t)*sym.cos(sym.cos(t)) + sym.sin(sym.sin(t))*sym.cos(t) + 
            sym.sin(sym.cos(t))) / ((t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))**2 + 1)
     analitica = sym.atan(t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))
     hs = [0.05, 0.15, 0.25, 0.5]
-    ejemplo_ODE_1(ODE, analitica, 7.5, 1.01, 9, hs, True)
+    ejemplo_PVI_1(ODE, analitica, 7.5, 1.01, 9, hs, True)
 
 
 # main()

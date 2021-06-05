@@ -1,10 +1,10 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs de orden superior)
 
 from unidad_6 import *
-from ejemplos_ODE_superior import ejemplo_ODE_superior
+from ejemplos_PVI_superior import ejemplo_PVI_superior
 
 
-def analisis_ODE_superior(ODE, analitica, t0, y0s, tf, orden):
+def analisis_PVI_superior(ODE, analitica, t0, y0s, tf, orden):
     
     print("ODE = {}".format(ODE))
 
@@ -12,7 +12,7 @@ def analisis_ODE_superior(ODE, analitica, t0, y0s, tf, orden):
     promedio, desviacion, tiempo = [], [], []
 
     for i in hs:
-        _, t, p, d = ejemplo_ODE_superior(ODE, analitica, t0, y0s, tf, [i], orden, False)
+        _, t, p, d = ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, [i], orden, False)
         promedio.append(p[0])
         desviacion.append(d[0])
         tiempo.append(t[0])
@@ -48,7 +48,7 @@ def main():
     ODE = 180*t**2 + 30
     analitica = 3*t**5 + 5*t**3 + 10
     y0s = [0, 0, 30]
-    analisis_ODE_superior(ODE, analitica, 0, y0s, 10, 3)
+    analisis_PVI_superior(ODE, analitica, 0, y0s, 10, 3)
 
 
 main()

@@ -3,7 +3,7 @@
 from unidad_6 import *
 
 
-def ejemplo_ODE_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
+def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden 2, la solución 
             analítica de la ODE, cuatro reales t0, y0, tf, yf que representan las 
@@ -136,7 +136,7 @@ def main():
     ODE = 42*t**5 + 2
     analitica = t**7 + t**2 + 10*t + 2
     ns = [4, 6, 8, 10]
-    ejemplo_ODE_PVF(ODE, analitica, 0, 2, 2, 162, ns, True)
+    ejemplo_PVF(ODE, analitica, 0, 2, 2, 162, ns, True)
 
 
 # main()

@@ -1,10 +1,10 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs DE UN PVF)
 
 from unidad_6 import *
-from ejemplos_ODE_PVF import ejemplo_ODE_PVF
+from ejemplos_PVF import ejemplo_PVF
 
 
-def analisis_ODE_PVF(ODE, analitica, t0, y0, tf, yf):
+def analisis_PVF(ODE, analitica, t0, y0, tf, yf):
     
     print("ODE = {}".format(ODE))
 
@@ -17,7 +17,7 @@ def analisis_ODE_PVF(ODE, analitica, t0, y0, tf, yf):
     tiempo = [[] for _ in range(2)]
 
     for i in ns:
-        _, t, p, d = ejemplo_ODE_PVF(ODE, analitica, t0, y0, tf, yf, [i], False)
+        _, t, p, d = ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, [i], False)
         for j in range(2):
             promedio[j].append(p[j][0])
             desviacion[j].append(d[j][0])
@@ -63,7 +63,7 @@ def main():
 
     ODE = 42*t**5 + 2
     analitica = t**7 + t**2 + 10*t + 2
-    analisis_ODE_PVF(ODE, analitica, 0, 2, 2, 162)
+    analisis_PVF(ODE, analitica, 0, 2, 2, 162)
 
 
 main()
