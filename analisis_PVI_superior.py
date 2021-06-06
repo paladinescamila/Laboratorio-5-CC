@@ -1,6 +1,6 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs de orden superior)
 
-from unidad_6 import *
+from metodos import *
 from ejemplos_PVI_superior import ejemplo_PVI_superior
 
 

@@ -1,6 +1,6 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs DE UN PVF)
 
-from unidad_6 import *
+from metodos import *
 from ejemplos_PVF import ejemplo_PVF
 
 

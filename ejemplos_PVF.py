@@ -1,6 +1,6 @@
 # EJEMPLOS DE ODEs  (PROBLEMAS DE VALOR DE FRONTERA)
 
-from unidad_6 import *
+from metodos import *
 
 
 def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):

@@ -1,6 +1,6 @@
 # EJEMPLOS DE ODEs DE ORDEN 1 (PROBLEMAS DE VALOR INICIAL)
 
-from unidad_6 import *
+from metodos import *
 
 
 def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):

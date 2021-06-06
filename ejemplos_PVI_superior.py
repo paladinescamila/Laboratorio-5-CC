@@ -1,6 +1,6 @@
 # EJEMPLOS DE ODEs DE ORDEN SUPERIOR (PROBLEMAS DE VALOR INICIAL)
 
-from unidad_6 import *
+from metodos import *
 
 
 def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):

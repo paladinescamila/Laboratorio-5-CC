@@ -1,6 +1,6 @@
 # ANÁLISIS DE COMPLEJIDAD Y EXACTITUD (ODEs de orden 1)
 
-from unidad_6 import *
+from metodos import *
 from ejemplos_PVI_1 import ejemplo_PVI_1
 
 
