@@ -1,6 +1,6 @@
 # ODEs (PROBLEMAS DE VALOR DE FRONTERA)
 
-from unidad_6 import *
+from metodos import *
 
 
 # Muestra ejemplos de ODEs con PVF

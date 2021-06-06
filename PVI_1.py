@@ -1,6 +1,6 @@
 # ODEs DE ORDEN 1 (PROBLEMAS DE VALOR INICIAL)
 
-from unidad_6 import *
+from metodos import *
 
 
 # Muestra ejemplos de ODEs de Primer Orden

@@ -51,4 +51,4 @@ def main():
     analisis_PVF(ODE, analitica, 0, 0, 15, 170859600)
 
 
-# main()
+main()

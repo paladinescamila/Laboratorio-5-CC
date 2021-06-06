@@ -1,6 +1,6 @@
 # ODEs DE ORDEN SUPERIOR (PROBLEMAS DE VALOR INICIAL)
 
-from unidad_6 import *
+from metodos import *
 
 
 # Muestra ejemplos de ODEs de Orden Superior
