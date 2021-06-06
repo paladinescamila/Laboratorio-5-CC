@@ -159,15 +159,15 @@ def analisis_PVI_1(ODE, analitica, t0, y0, tf):
             promedio[j].append(p[j][0])
             desviacion[j].append(d[j][0])
 
-    imprimir("Tiempo", hs, tiempo, ["h"] + metodos)
-    graficar(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
+    imprimir_PVI_1("Tiempo", hs, tiempo, ["h"] + metodos)
+    graficar_PVI_1(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
 
-    imprimir("Error (Promedio)", hs, promedio, ["h"] + metodos)
-    imprimir("Error (Desviación)", hs, desviacion, ["h"] + metodos)
-    graficar(hs, promedio, colores, "Error", "h", "Error", metodos)
+    imprimir_PVI_1("Error (Promedio)", hs, promedio, ["h"] + metodos)
+    imprimir_PVI_1("Error (Desviación)", hs, desviacion, ["h"] + metodos)
+    graficar_PVI_1(hs, promedio, colores, "Error", "h", "Error", metodos)
 
 
-def graficar(x, y, color, title, xlabel, ylabel, label):
+def graficar_PVI_1(x, y, color, title, xlabel, ylabel, label):
 
     for i in range(len(y)): 
         plt.plot(x, y[i], color=color[i], label=label[i], marker="o")
@@ -180,7 +180,7 @@ def graficar(x, y, color, title, xlabel, ylabel, label):
     plt.show()
 
 
-def imprimir(titulo, x, y, c):
+def imprimir_PVI_1(titulo, x, y, c):
 
     print("------------------------------------------------------")
     print(" " + titulo)

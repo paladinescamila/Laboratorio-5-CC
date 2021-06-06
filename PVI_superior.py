@@ -102,11 +102,11 @@ def analisis_PVI_superior(ODE, analitica, t0, y0s, tf, orden):
             
     print("----------------------------------------------------")
     
-    graficar(hs, tiempo, "blue", "Tiempo", "h", "Tiempo", "Tiempo")
-    graficar(hs, promedio, "blue", "Error", "h", "Error", "Error")
+    graficar_PVI_superior(hs, tiempo, "blue", "Tiempo", "h", "Tiempo", "Tiempo")
+    graficar_PVI_superior(hs, promedio, "blue", "Error", "h", "Error", "Error")
 
 
-def graficar(x, y, color, title, xlabel, ylabel, label):
+def graficar_PVI_superior(x, y, color, title, xlabel, ylabel, label):
 
     plt.plot(x, y, color=color, label=label, marker="o")
     plt.title(title)

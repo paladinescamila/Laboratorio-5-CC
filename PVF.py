@@ -152,15 +152,15 @@ def analisis_PVF(ODE, analitica, t0, y0, tf, yf):
             promedio[j].append(p[j][0])
             desviacion[j].append(d[j][0])
 
-    imprimir("Tiempo", ns, tiempo, ["n"] + metodos)
-    graficar(ns, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
+    imprimir_PVF("Tiempo", ns, tiempo, ["n"] + metodos)
+    graficar_PVF(ns, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
 
-    imprimir("Error (Promedio)", ns, promedio, ["n"] + metodos)
-    imprimir("Error (Desviación)", ns, desviacion, ["n"] + metodos)
-    graficar(ns, promedio, colores, "Error", "n", "Error", metodos)
+    imprimir_PVF("Error (Promedio)", ns, promedio, ["n"] + metodos)
+    imprimir_PVF("Error (Desviación)", ns, desviacion, ["n"] + metodos)
+    graficar_PVF(ns, promedio, colores, "Error", "n", "Error", metodos)
 
 
-def graficar(x, y, color, title, xlabel, ylabel, label):
+def graficar_PVF(x, y, color, title, xlabel, ylabel, label):
 
     for i in range(len(y)): 
         plt.plot(x, y[i], color=color[i], label=label[i], marker="o")
@@ -173,7 +173,7 @@ def graficar(x, y, color, title, xlabel, ylabel, label):
     plt.show()
 
 
-def imprimir(titulo, x, y, c):
+def imprimir_PVF(titulo, x, y, c):
 
     print("------------------------------------------------------")
     print(" " + titulo)
