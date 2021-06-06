@@ -160,7 +160,7 @@ def multipaso_4(ODE, t0, y0, tf, h):
     return pasos
 
 
-# Resolución de Ecuaciones de Orden Superior
+# Resolución de Ecuaciones de Orden Superior (Con el Método de Euler)
 def ODEs_superior(ODE, t0, y0s, tf, h, n):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden n, un real t0 y una lista
