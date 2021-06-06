@@ -8,7 +8,7 @@ def analisis_PVI_1(ODE, analitica, t0, y0, tf):
     
     print("ODE = {}".format(ODE))
 
-    colores = ["red", "purple", "green", "blue", "orange", "gray"]
+    colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
     metodos = ["Euler", "Taylor", "Runge-Kutta 2", "Runge-Kutta 4", 
                 "Multipaso 2", "Multipaso 4"]
 
@@ -24,12 +24,12 @@ def analisis_PVI_1(ODE, analitica, t0, y0, tf):
             desviacion[j].append(d[j][0])
             tiempo[j].append(t[j][0])
 
+    imprimir("Tiempo", hs, tiempo, ["h"] + metodos)
+    graficar(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
+
     imprimir("Error (Promedio)", hs, promedio, ["h"] + metodos)
     imprimir("Error (Desviación)", hs, desviacion, ["h"] + metodos)
     graficar(hs, promedio, colores, "Error", "h", "Error", metodos)
-
-    imprimir("Tiempo", hs, tiempo, ["h"] + metodos)
-    graficar(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
 
 
 def graficar(x, y, color, title, xlabel, ylabel, label):
@@ -55,7 +55,9 @@ def imprimir(titulo, x, y, c):
 
     for i in range(len(x)):
         y1, y2, y3, y4, y5, y6 = y[0][i], y[1][i], y[2][i], y[3][i], y[4][i], y[5][i]
-        print(" {}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3, y4, y5, y6))
+        # print(" {}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3, y4, y5, y6))
+        print("\t\t{} & {:.5f} & {:.5f} & {:.5f} & {:.5f} & {:.5f} & {:.5f} \\\\"
+        .format(x[i], y1, y2, y3, y4, y5, y6))
             
     print("------------------------------------------------------")
 
@@ -63,20 +65,19 @@ def imprimir(titulo, x, y, c):
 def main():
 
     print("EJEMPLO 1")
-    ODE = 2*t*sym.cos(t**2) - 2*sym.cos(t)
-    analitica = sym.sin(t**2) - 2*sym.sin(t)
-    analisis_PVI_1(ODE, analitica, 0, 0, 6)
+    ODE = -2*y + 3*sym.cos(t)
+    analitica = 3*sym.sin(t)/5 + 6*sym.cos(t)/5
+    analisis_PVI_1(ODE, analitica, 5, -0.23495994224201155, 8)
 
     print("EJEMPLO 2")
-    ODE = 2**(sym.sin(t**2)/t)*(2*sym.cos(t**2) - sym.sin(t**2)/t**2)*sym.log(2)
-    analitica = 2**(sym.sin(t**2)/t)
-    analisis_PVI_1(ODE, analitica, 1, 1.8, 4)
+    ODE = 2*t**3 - 5*t**2
+    analitica = t**4/2 - 5*t**3/3
+    analisis_PVI_1(ODE, analitica, -15, 30937.5, 20)
 
     print("EJEMPLO 3")
-    ODE = (-t*sym.sin(t)*sym.cos(sym.cos(t)) + sym.sin(sym.sin(t))*sym.cos(t) + 
-           sym.sin(sym.cos(t))) / ((t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))**2 + 1)
-    analitica = sym.atan(t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))
-    analisis_PVI_1(ODE, analitica, 7.5, 1.01, 9)
+    ODE = 2*t*sym.cos(t**2) - 3*sym.cos(t)
+    analitica = -3*sym.sin(t) + sym.sin(t**2)
+    analisis_PVI_1(ODE, analitica, 2, -3.4846947757849733, 3)
 
 
-main()
+# main()

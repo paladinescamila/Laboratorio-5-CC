@@ -32,9 +32,9 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print("y({}) = {}\ny({}) = {}\nns = {}".format(t0, y0, tf, yf, ns))
 
         t_metodos, p_metodos, d_metodos, y_metodos = [], [], [], []
-        colores = ["red", "purple", "green", "blue", "orange", "gray"]
+        colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
         metodos = ["Diferencias Finitas", "Elementos Finitos"]
-        if (nn > 6): colores = ["purple" for _ in range(nn)]
+        if (nn > 6): colores = ["blue" for _ in range(nn)]
 
     for i in range(2):
 
@@ -77,7 +77,9 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
             promedios[i][j], desviaciones[i][j] = promedio, desviacion
 
             if (mostrar):
-                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # .format(ns[j], tiempo, promedio, desviacion))
+                print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\"
                 .format(ns[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in puntos]
                 ys = [yi for ti, yi in puntos]
@@ -102,7 +104,8 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print(" n\tFunción")
         print("------------------------------------------------")
         for i in range(nn):
-            print(" {}\t{}".format(ns[i], funciones_ef[i]))
+            # print(" {}\t{}".format(ns[i], funciones_ef[i]))
+            print("\t\t{} & {} \\\\".format(ns[i], funciones_ef[i]))
         print("------------------------------------------------")
 
         print()
@@ -113,7 +116,9 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print(" Método\t\t\tTiempo\t\tError (Prom)\tError (Desv)")
         print("---------------------------------------------------------------------")
         for i in range(2):
-            print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+            # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+            # .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
+            print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\"
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
@@ -134,9 +139,9 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
 def main():
 
     ODE = 42*t**5 + 2
-    analitica = t**7 + t**2 + 10*t + 2
+    analitica = t**7 + t**2
     ns = [4, 6, 8, 10]
-    ejemplo_PVF(ODE, analitica, 0, 2, 2, 162, ns, True)
+    ejemplo_PVF(ODE, analitica, 0, 0, 15, 170859600, ns, True)
 
 
 # main()

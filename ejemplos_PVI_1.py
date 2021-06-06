@@ -31,10 +31,10 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
         print("y({}) = {}\ntf = {}\nhs = {}".format(t0, y0, tf, hs))
 
         t_metodos, p_metodos, d_metodos, y_metodos = [], [], [], []
-        colores = ["red", "purple", "green", "blue", "orange", "gray"]
+        colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
         metodos = ["Euler", "Taylor", "Runge-Kutta 2", "Runge-Kutta 4", 
                    "Multipaso 2", "Multipaso 4"]
-        if (nh > 6): colores = ["purple" for _ in range(nh)]
+        if (nh > 6): colores = ["blue" for _ in range(nh)]
 
     for i in range(6):
 
@@ -93,7 +93,9 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
             promedios[i][j], desviaciones[i][j] = promedio, desviacion
 
             if (mostrar):
-                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # .format(hs[j], tiempo, promedio, desviacion))
+                print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
                 .format(hs[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
@@ -119,7 +121,9 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
         print(" Método\t\tTiempo\tError (Prom)\tError (Desv)")
         print("------------------------------------------------------")
         for i in range(6):
-            print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+            # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+            # .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
+            print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
@@ -140,23 +144,22 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
 def main():
 
     print("EJEMPLO 1")
-    ODE = 2*t*sym.cos(t**2) - 2*sym.cos(t)
-    analitica = sym.sin(t**2) - 2*sym.sin(t)
-    hs = [0.1, 0.2, 0.4, 0.5]
-    ejemplo_PVI_1(ODE, analitica, 0, 0, 6, hs, True)
+    ODE = -2*y + 3*sym.cos(t)
+    analitica = 3*sym.sin(t)/5 + 6*sym.cos(t)/5
+    hs = [0.09375, 0.1875, 0.375, 0.75]
+    ejemplo_PVI_1(ODE, analitica, 5, -0.23495994224201155, 8, hs, True)
 
     print("EJEMPLO 2")
-    ODE = 2**(sym.sin(t**2)/t)*(2*sym.cos(t**2) - sym.sin(t**2)/t**2)*sym.log(2)
-    analitica = 2**(sym.sin(t**2)/t)
-    hs = [0.1, 0.2, 0.4, 0.5]
-    ejemplo_PVI_1(ODE, analitica, 1, 1.8, 4, hs, True)
+    ODE = 2*t**3 - 5*t**2
+    analitica = t**4/2 - 5*t**3/3
+    hs = [1.09375, 2.1875, 4.375, 8.75]
+    ejemplo_PVI_1(ODE, analitica, -15, 30937.5, 20, hs, True)
 
     print("EJEMPLO 3")
-    ODE = (-t*sym.sin(t)*sym.cos(sym.cos(t)) + sym.sin(sym.sin(t))*sym.cos(t) + 
-           sym.sin(sym.cos(t))) / ((t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))**2 + 1)
-    analitica = sym.atan(t*sym.sin(sym.cos(t)) - sym.cos(sym.sin(t)))
-    hs = [0.05, 0.15, 0.25, 0.5]
-    ejemplo_PVI_1(ODE, analitica, 7.5, 1.01, 9, hs, True)
+    ODE = 2*t*sym.cos(t**2) - 3*sym.cos(t)
+    analitica = -3*sym.sin(t) + sym.sin(t**2)
+    hs = [0.03125, 0.0625, 0.125, 0.25]
+    ejemplo_PVI_1(ODE, analitica, 2, -3.4846947757849733, 3, hs, True)
 
 
 # main()

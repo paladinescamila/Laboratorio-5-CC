@@ -25,13 +25,13 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
 
     if (mostrar):
         
-        print("ODE = {}\ny".format(ODE)+"'"*n+" = {}".format(analitica))
+        print("ODE = {}\ny(t) = {}".format(ODE, analitica))
         for i in range(n):
             print("y"+"'"*i+"({}) = {}".format(t0, y0s[i]))
         print("tf = {}\nhs = {}".format(tf, hs))
 
-        colores = ["red", "purple", "green", "blue", "orange", "gray"]
-        if (nh > 6): colores = ["purple" for _ in range(nh)]
+        colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
+        if (nh > 6): colores = ["blue" for _ in range(nh)]
     
         plt.title("ODEs de orden superior")
         print("------------------------------------------------------")
@@ -56,7 +56,9 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
         desviaciones.append(desviacion)
 
         if (mostrar):
-                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
+                # .format(hs[i], tiempo, promedio, desviacion))
+                print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
                 .format(hs[i], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
@@ -78,9 +80,9 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
 def main():
 
     ODE = 180*t**2 + 30
-    analitica = 3*t**5 + 5*t**3 + 10
+    analitica = 3*t**5 + 5*t**3
     y0s = [0, 0, 30]
-    hs = [0.5, 1, 2, 2.5]
+    hs = [0.3125, 0.625, 1.25, 2.5]
     ejemplo_PVI_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
 
 
