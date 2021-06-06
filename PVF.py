@@ -1,8 +1,9 @@
-# EJEMPLOS DE ODEs  (PROBLEMAS DE VALOR DE FRONTERA)
+# ODEs (PROBLEMAS DE VALOR DE FRONTERA)
 
-from metodos import *
+from unidad_6 import *
 
 
+# Muestra ejemplos de ODEs con PVF
 def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden 2, la solución 
@@ -77,9 +78,7 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
             promedios[i][j], desviaciones[i][j] = promedio, desviacion
 
             if (mostrar):
-                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
-                # .format(ns[j], tiempo, promedio, desviacion))
-                print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\"
+                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
                 .format(ns[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in puntos]
                 ys = [yi for ti, yi in puntos]
@@ -104,8 +103,7 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print(" n\tFunción")
         print("------------------------------------------------")
         for i in range(nn):
-            # print(" {}\t{}".format(ns[i], funciones_ef[i]))
-            print("\t\t{} & {} \\\\".format(ns[i], funciones_ef[i]))
+            print(" {}\t{}".format(ns[i], funciones_ef[i]))
         print("------------------------------------------------")
 
         print()
@@ -116,9 +114,7 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print(" Método\t\t\tTiempo\t\tError (Prom)\tError (Desv)")
         print("---------------------------------------------------------------------")
         for i in range(2):
-            # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
-            # .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
-            print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\"
+            print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
@@ -136,12 +132,57 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
     return resultados, tiempos, promedios, desviaciones
 
 
-def main():
+# Muestra análisis de ejemplos de ODEs de Orden Superior
+def analisis_PVF(ODE, analitica, t0, y0, tf, yf):
+    
+    print("ODE = {}".format(ODE))
 
-    ODE = 42*t**5 + 2
-    analitica = t**7 + t**2
-    ns = [4, 6, 8, 10]
-    ejemplo_PVF(ODE, analitica, 0, 0, 15, 170859600, ns, True)
+    colores = ["red", "blue"]
+    metodos = ["Diferencias Finitas", "Elementos Finitos"]
+
+    ns = [(i+3) for i in range(10)]
+    tiempo = [[] for _ in range(2)]
+    promedio = [[] for _ in range(2)]
+    desviacion = [[] for _ in range(2)]
+
+    for i in ns:
+        _, t, p, d = ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, [i], False)
+        for j in range(2):
+            tiempo[j].append(t[j][0])
+            promedio[j].append(p[j][0])
+            desviacion[j].append(d[j][0])
+
+    imprimir("Tiempo", ns, tiempo, ["n"] + metodos)
+    graficar(ns, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
+
+    imprimir("Error (Promedio)", ns, promedio, ["n"] + metodos)
+    imprimir("Error (Desviación)", ns, desviacion, ["n"] + metodos)
+    graficar(ns, promedio, colores, "Error", "n", "Error", metodos)
 
 
-# main()
+def graficar(x, y, color, title, xlabel, ylabel, label):
+
+    for i in range(len(y)): 
+        plt.plot(x, y[i], color=color[i], label=label[i], marker="o")
+
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
+def imprimir(titulo, x, y, c):
+
+    print("------------------------------------------------------")
+    print(" " + titulo)
+    print("------------------------------------------------------")
+    print(" {}\t{}\t{}".format(c[0], c[1], c[2]))
+    print("------------------------------------------------------")
+
+    for i in range(len(x)):
+        y1, y2 = y[0][i], y[1][i]
+        print(" {}\t{:.10f}\t{:.10f}".format(x[i], y1, y2))
+            
+    print("------------------------------------------------------")

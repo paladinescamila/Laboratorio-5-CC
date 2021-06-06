@@ -1,8 +1,9 @@
-# EJEMPLOS DE ODEs DE ORDEN SUPERIOR (PROBLEMAS DE VALOR INICIAL)
+# ODEs DE ORDEN SUPERIOR (PROBLEMAS DE VALOR INICIAL)
 
-from metodos import *
+from unidad_6 import *
 
 
+# Muestra ejemplos de ODEs de Orden Superior
 def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden superior, la solución 
@@ -56,9 +57,7 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
         desviaciones.append(desviacion)
 
         if (mostrar):
-                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
-                # .format(hs[i], tiempo, promedio, desviacion))
-                print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
+                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
                 .format(hs[i], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
@@ -77,13 +76,42 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     return resultados, tiempos, promedios, desviaciones
 
 
-def main():
+# Muestra análisis de ejemplos de ODEs de Orden Superior
+def analisis_PVI_superior(ODE, analitica, t0, y0s, tf, orden):
+    
+    print("ODE = {}".format(ODE))
 
-    ODE = 180*t**2 + 30
-    analitica = 3*t**5 + 5*t**3
-    y0s = [0, 0, 30]
-    hs = [0.3125, 0.625, 1.25, 2.5]
-    ejemplo_PVI_superior(ODE, analitica, 0, y0s, 10, hs, 3, True)
+    hs = [round(0.1*(i+1), 1) for i in range(10)]
+    tiempo, promedio, desviacion = [], [], []
+
+    for i in hs:
+        _, t, p, d = ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, [i], orden, False)
+        tiempo.append(t[0])
+        promedio.append(p[0])
+        desviacion.append(d[0])
+
+    print("----------------------------------------------------")
+    print("               ODEs DE ORDEN SUPERIOR               ")
+    print("----------------------------------------------------")
+    print(" h\tTiempo\t\tPromedio\tDesviación")
+    print("----------------------------------------------------")
+
+    for i in range(10):
+        print(" {}\t{:.5f}\t\t{:.5f}\t{:.5f}"
+        .format(hs[i], tiempo[i], promedio[i], desviacion[i]))
+            
+    print("----------------------------------------------------")
+    
+    graficar(hs, tiempo, "blue", "Tiempo", "h", "Tiempo", "Tiempo")
+    graficar(hs, promedio, "blue", "Error", "h", "Error", "Error")
 
 
-# main()
+def graficar(x, y, color, title, xlabel, ylabel, label):
+
+    plt.plot(x, y, color=color, label=label, marker="o")
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.grid()
+    plt.show()

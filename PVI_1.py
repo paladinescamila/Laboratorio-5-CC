@@ -1,8 +1,9 @@
-# EJEMPLOS DE ODEs DE ORDEN 1 (PROBLEMAS DE VALOR INICIAL)
+# ODEs DE ORDEN 1 (PROBLEMAS DE VALOR INICIAL)
 
-from metodos import *
+from unidad_6 import *
 
 
+# Muestra ejemplos de ODEs de Primer Orden
 def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
     """
     Entrada: una Ecuación Diferencial Ordinaria ODE de orden 1, la solución 
@@ -30,7 +31,7 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
         print("ODE = {}\ny(t) = {}".format(ODE, analitica))
         print("y({}) = {}\ntf = {}\nhs = {}".format(t0, y0, tf, hs))
 
-        t_metodos, p_metodos, d_metodos, y_metodos = [], [], [], []
+        y_metodos, t_metodos, p_metodos, d_metodos = [], [], [], []
         colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
         metodos = ["Euler", "Taylor", "Runge-Kutta 2", "Runge-Kutta 4", 
                    "Multipaso 2", "Multipaso 4"]
@@ -93,9 +94,7 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
             promedios[i][j], desviaciones[i][j] = promedio, desviacion
 
             if (mostrar):
-                # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
-                # .format(hs[j], tiempo, promedio, desviacion))
-                print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
+                print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
                 .format(hs[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
@@ -121,9 +120,7 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
         print(" Método\t\tTiempo\tError (Prom)\tError (Desv)")
         print("------------------------------------------------------")
         for i in range(6):
-            # print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
-            # .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
-            print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\"
+            print(" {}\t{:.10f}\t{:.10f}\t{:.10f}"
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
@@ -141,25 +138,59 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
     return resultados, tiempos, promedios, desviaciones
 
 
-def main():
+# Muestra análisis de ejemplos de ODEs de Primer Orden
+def analisis_PVI_1(ODE, analitica, t0, y0, tf):
+    
+    print("ODE = {}".format(ODE))
 
-    print("EJEMPLO 1")
-    ODE = -2*y + 3*sym.cos(t)
-    analitica = 3*sym.sin(t)/5 + 6*sym.cos(t)/5
-    hs = [0.09375, 0.1875, 0.375, 0.75]
-    ejemplo_PVI_1(ODE, analitica, 5, -0.23495994224201155, 8, hs, True)
+    colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
+    metodos = ["Euler", "Taylor", "Runge-Kutta 2", "Runge-Kutta 4", 
+                "Multipaso 2", "Multipaso 4"]
 
-    print("EJEMPLO 2")
-    ODE = 2*t**3 - 5*t**2
-    analitica = t**4/2 - 5*t**3/3
-    hs = [1.09375, 2.1875, 4.375, 8.75]
-    ejemplo_PVI_1(ODE, analitica, -15, 30937.5, 20, hs, True)
+    hs = [round(0.1*(i+1), 1) for i in range(10)]
+    tiempo = [[] for _ in range(6)]
+    promedio = [[] for _ in range(6)]
+    desviacion = [[] for _ in range(6)]
 
-    print("EJEMPLO 3")
-    ODE = 2*t*sym.cos(t**2) - 3*sym.cos(t)
-    analitica = -3*sym.sin(t) + sym.sin(t**2)
-    hs = [0.03125, 0.0625, 0.125, 0.25]
-    ejemplo_PVI_1(ODE, analitica, 2, -3.4846947757849733, 3, hs, True)
+    for i in hs:
+        _, t, p, d = ejemplo_PVI_1(ODE, analitica, t0, y0, tf, [i], False)
+        for j in range(6):
+            tiempo[j].append(t[j][0])
+            promedio[j].append(p[j][0])
+            desviacion[j].append(d[j][0])
+
+    imprimir("Tiempo", hs, tiempo, ["h"] + metodos)
+    graficar(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
+
+    imprimir("Error (Promedio)", hs, promedio, ["h"] + metodos)
+    imprimir("Error (Desviación)", hs, desviacion, ["h"] + metodos)
+    graficar(hs, promedio, colores, "Error", "h", "Error", metodos)
 
 
-# main()
+def graficar(x, y, color, title, xlabel, ylabel, label):
+
+    for i in range(len(y)): 
+        plt.plot(x, y[i], color=color[i], label=label[i], marker="o")
+
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
+def imprimir(titulo, x, y, c):
+
+    print("------------------------------------------------------")
+    print(" " + titulo)
+    print("------------------------------------------------------")
+    print(" {}\t{}\t{}\t{}\t{}\t{}\t{}".format(c[0], c[1], c[2], c[3], c[4], c[5], c[6]))
+    print("------------------------------------------------------")
+
+    for i in range(len(x)):
+        y1, y2, y3, y4, y5, y6 = y[0][i], y[1][i], y[2][i], y[3][i], y[4][i], y[5][i]
+        print(" {}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}"
+        .format(x[i], y1, y2, y3, y4, y5, y6))
+            
+    print("------------------------------------------------------")
