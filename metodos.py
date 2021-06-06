@@ -4,6 +4,7 @@ import time
 import numpy as np
 import sympy as sym
 import matplotlib.pyplot as plt
+from sympy import sin, cos
 
 t, y = sym.symbols("t y")
 

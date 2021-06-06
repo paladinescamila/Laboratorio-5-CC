@@ -11,8 +11,8 @@ def main():
     # ODEs DE PRIMER ORDEN (PROBLEMA DE VALOR INICIAL)
 
     print("EJEMPLO 1")
-    ODE = -2*y + 3*sym.cos(t)
-    analitica = 3*sym.sin(t)/5 + 6*sym.cos(t)/5
+    ODE = -2*y + 3*cos(t)
+    analitica = 3*sin(t)/5 + 6*cos(t)/5
     hs = [0.09375, 0.1875, 0.375, 0.75]
     ejemplo_PVI_1(ODE, analitica, 5, -0.23495994224201155, 8, hs, True)
     analisis_PVI_1(ODE, analitica, 5, -0.23495994224201155, 8)
@@ -25,8 +25,8 @@ def main():
     analisis_PVI_1(ODE, analitica, -15, 30937.5, 20)
 
     print("EJEMPLO 3")
-    ODE = 2*t*sym.cos(t**2) - 3*sym.cos(t)
-    analitica = -3*sym.sin(t) + sym.sin(t**2)
+    ODE = 2*t*cos(t**2) - 3*cos(t)
+    analitica = -3*sin(t) + sin(t**2)
     hs = [0.03125, 0.0625, 0.125, 0.25]
     ejemplo_PVI_1(ODE, analitica, 2, -3.4846947757849733, 3, hs, True)
     analisis_PVI_1(ODE, analitica, 2, -3.4846947757849733, 3)
