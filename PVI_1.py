@@ -98,7 +98,8 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
                 .format(hs[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
-                plt.plot(ts, ys, color=colores[j], label="h = "+str(hs[j]), marker="o", markersize=4)
+                plt.plot(ts, ys, color=colores[j], 
+                         label="h = "+str(hs[j]), marker="o", markersize=4)
 
         if (mostrar):
 
@@ -124,7 +125,8 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
-            plt.plot(ts, ys, color=colores[i], label=str(metodos[i]), marker="o", markersize=4)
+            plt.plot(ts, ys, color=colores[i], 
+                     label=str(metodos[i]), marker="o", markersize=4)
         print("------------------------------------------------------")
         
         plt.plot(x_funcion, y_analitica, color="black", label="Analítica", linewidth=2)
@@ -140,31 +142,20 @@ def ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, mostrar):
 
 # Muestra análisis de ejemplos de ODEs de Primer Orden
 def analisis_PVI_1(ODE, analitica, t0, y0, tf):
-    
-    print("ODE = {}".format(ODE))
 
     colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
     metodos = ["Euler", "Taylor", "Runge-Kutta 2", "Runge-Kutta 4", 
                 "Multipaso 2", "Multipaso 4"]
 
     hs = [round(0.1*(i+1), 1) for i in range(10)]
-    tiempo = [[] for _ in range(6)]
-    promedio = [[] for _ in range(6)]
-    desviacion = [[] for _ in range(6)]
+    _, t, p, d = ejemplo_PVI_1(ODE, analitica, t0, y0, tf, hs, False)
 
-    for i in hs:
-        _, t, p, d = ejemplo_PVI_1(ODE, analitica, t0, y0, tf, [i], False)
-        for j in range(6):
-            tiempo[j].append(t[j][0])
-            promedio[j].append(p[j][0])
-            desviacion[j].append(d[j][0])
+    imprimir_PVI_1("Tiempo", hs, t, ["h"] + metodos)
+    graficar_PVI_1(hs, t, colores, "Tiempo", "h", "Tiempo", metodos)
 
-    imprimir_PVI_1("Tiempo", hs, tiempo, ["h"] + metodos)
-    graficar_PVI_1(hs, tiempo, colores, "Tiempo", "h", "Tiempo", metodos)
-
-    imprimir_PVI_1("Error (Promedio)", hs, promedio, ["h"] + metodos)
-    imprimir_PVI_1("Error (Desviación)", hs, desviacion, ["h"] + metodos)
-    graficar_PVI_1(hs, promedio, colores, "Error", "h", "Error", metodos)
+    imprimir_PVI_1("Error (Promedio)", hs, p, ["h"] + metodos)
+    imprimir_PVI_1("Error (Desviación)", hs, d, ["h"] + metodos)
+    graficar_PVI_1(hs, p, colores, "Error", "h", "Error", metodos)
 
 
 def graficar_PVI_1(x, y, color, title, xlabel, ylabel, label):
@@ -185,12 +176,10 @@ def imprimir_PVI_1(titulo, x, y, c):
     print("------------------------------------------------------")
     print(" " + titulo)
     print("------------------------------------------------------")
-    print(" {}\t{}\t{}\t{}\t{}\t{}\t{}".format(c[0], c[1], c[2], c[3], c[4], c[5], c[6]))
+    print(" {}\t{}\t{}\t{}\t{}\t{}\t{}"
+    .format(c[0], c[1], c[2], c[3], c[4], c[5], c[6]))
     print("------------------------------------------------------")
-
     for i in range(len(x)):
-        y1, y2, y3, y4, y5, y6 = y[0][i], y[1][i], y[2][i], y[3][i], y[4][i], y[5][i]
         print(" {}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}"
-        .format(x[i], y1, y2, y3, y4, y5, y6))
-            
+        .format(x[i], y[0][i], y[1][i], y[2][i], y[3][i], y[4][i], y[5][i]))
     print("------------------------------------------------------")

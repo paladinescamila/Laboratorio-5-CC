@@ -27,8 +27,7 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
     if (mostrar):
         
         print("ODE = {}\ny(t) = {}".format(ODE, analitica))
-        for i in range(n):
-            print("y"+"'"*i+"({}) = {}".format(t0, y0s[i]))
+        for i in range(n): print("y"+"'"*i+"({}) = {}".format(t0, y0s[i]))
         print("tf = {}\nhs = {}".format(tf, hs))
 
         colores = ["red", "blue", "green", "purple", "orange", "dodgerblue"]
@@ -61,7 +60,8 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
                 .format(hs[i], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in pasos]
                 ys = [yi for ti, yi in pasos]
-                plt.plot(ts, ys, color=colores[i], label="h = "+str(hs[i]), marker="o", markersize=4)
+                plt.plot(ts, ys, color=colores[i], 
+                         label="h = "+str(hs[i]), marker="o", markersize=4)
 
     if (mostrar):
 
@@ -78,32 +78,21 @@ def ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, n, mostrar):
 
 # Muestra análisis de ejemplos de ODEs de Orden Superior
 def analisis_PVI_superior(ODE, analitica, t0, y0s, tf, orden):
-    
-    print("ODE = {}".format(ODE))
 
     hs = [round(0.1*(i+1), 1) for i in range(10)]
-    tiempo, promedio, desviacion = [], [], []
-
-    for i in hs:
-        _, t, p, d = ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, [i], orden, False)
-        tiempo.append(t[0])
-        promedio.append(p[0])
-        desviacion.append(d[0])
+    _, t, p, d = ejemplo_PVI_superior(ODE, analitica, t0, y0s, tf, hs, orden, False)
 
     print("----------------------------------------------------")
     print("               ODEs DE ORDEN SUPERIOR               ")
     print("----------------------------------------------------")
     print(" h\tTiempo\t\tPromedio\tDesviación")
     print("----------------------------------------------------")
-
     for i in range(10):
-        print(" {}\t{:.5f}\t\t{:.5f}\t{:.5f}"
-        .format(hs[i], tiempo[i], promedio[i], desviacion[i]))
-            
+        print(" {}\t{:.5f}\t\t{:.5f}\t{:.5f}".format(hs[i], t[i], p[i], d[i]))
     print("----------------------------------------------------")
     
-    graficar_PVI_superior(hs, tiempo, "blue", "Tiempo", "h", "Tiempo", "Tiempo")
-    graficar_PVI_superior(hs, promedio, "blue", "Error", "h", "Error", "Error")
+    graficar_PVI_superior(hs, t, "blue", "Tiempo", "h", "Tiempo", "Tiempo")
+    graficar_PVI_superior(hs, p, "blue", "Error", "h", "Error", "Error")
 
 
 def graficar_PVI_superior(x, y, color, title, xlabel, ylabel, label):

@@ -82,7 +82,8 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
                 .format(ns[j], tiempo, promedio, desviacion))
                 ts = [ti for ti, yi in puntos]
                 ys = [yi for ti, yi in puntos]
-                plt.plot(ts, ys, color=colores[j], label="n = "+str(ns[j]), marker="o", markersize=4)
+                plt.plot(ts, ys, color=colores[j], 
+                         label="n = "+str(ns[j]), marker="o", markersize=4)
 
         if (mostrar):
 
@@ -102,8 +103,7 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
         print("------------------------------------------------")
         print(" n\tFunción")
         print("------------------------------------------------")
-        for i in range(nn):
-            print(" {}\t{}".format(ns[i], funciones_ef[i]))
+        for i in range(nn): print(" {}\t{}".format(ns[i], funciones_ef[i]))
         print("------------------------------------------------")
 
         print()
@@ -118,7 +118,8 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
             .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             ts = [ti for ti, yi in y_metodos[i]]
             ys = [yi for ti, yi in y_metodos[i]]
-            plt.plot(ts, ys, color=colores[i], label=str(metodos[i]), marker="o", markersize=4)
+            plt.plot(ts, ys, color=colores[i], 
+                     label=str(metodos[i]), marker="o", markersize=4)
         print("---------------------------------------------------------------------")
         
         plt.plot(x_funcion, y_analitica, color="black", label="Analítica", linewidth=2)
@@ -134,30 +135,19 @@ def ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, mostrar):
 
 # Muestra análisis de ejemplos de ODEs de Orden Superior
 def analisis_PVF(ODE, analitica, t0, y0, tf, yf):
-    
-    print("ODE = {}".format(ODE))
 
     colores = ["red", "blue"]
     metodos = ["Diferencias Finitas", "Elementos Finitos"]
 
     ns = [(i+3) for i in range(10)]
-    tiempo = [[] for _ in range(2)]
-    promedio = [[] for _ in range(2)]
-    desviacion = [[] for _ in range(2)]
+    _, t, p, d = ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, ns, False)
 
-    for i in ns:
-        _, t, p, d = ejemplo_PVF(ODE, analitica, t0, y0, tf, yf, [i], False)
-        for j in range(2):
-            tiempo[j].append(t[j][0])
-            promedio[j].append(p[j][0])
-            desviacion[j].append(d[j][0])
+    imprimir_PVF("Tiempo", ns, t, ["n"] + metodos)
+    graficar_PVF(ns, t, colores, "Tiempo", "n", "Tiempo", metodos)
 
-    imprimir_PVF("Tiempo", ns, tiempo, ["n"] + metodos)
-    graficar_PVF(ns, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
-
-    imprimir_PVF("Error (Promedio)", ns, promedio, ["n"] + metodos)
-    imprimir_PVF("Error (Desviación)", ns, desviacion, ["n"] + metodos)
-    graficar_PVF(ns, promedio, colores, "Error", "n", "Error", metodos)
+    imprimir_PVF("Error (Promedio)", ns, p, ["n"] + metodos)
+    imprimir_PVF("Error (Desviación)", ns, d, ["n"] + metodos)
+    graficar_PVF(ns, p, colores, "Error", "n", "Error", metodos)
 
 
 def graficar_PVF(x, y, color, title, xlabel, ylabel, label):
@@ -180,9 +170,5 @@ def imprimir_PVF(titulo, x, y, c):
     print("------------------------------------------------------")
     print(" {}\t{}\t{}".format(c[0], c[1], c[2]))
     print("------------------------------------------------------")
-
-    for i in range(len(x)):
-        y1, y2 = y[0][i], y[1][i]
-        print(" {}\t{:.10f}\t{:.10f}".format(x[i], y1, y2))
-            
+    for i in range(len(x)): print(" {}\t{:.10f}\t{:.10f}".format(x[i], y[0][i], y[1][i]))
     print("------------------------------------------------------")
