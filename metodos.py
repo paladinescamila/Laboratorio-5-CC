@@ -245,7 +245,7 @@ def elementos_finitos(ODE, t0, y0, tf, yf, n):
             b.append(yf)
 
         else:
-            A.append([j * (j - 1) * ti[i]**(j - 2) for j in range(n)])
+            A.append([j*(j - 1)*ti[i]**(j - 2) if j > 1 else 0 for j in range(n)])
             b.append(f(ti[i]))
 
     x = np.linalg.solve(A, b)

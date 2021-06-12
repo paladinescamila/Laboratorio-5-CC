@@ -44,11 +44,19 @@ def main():
 
     # ODEs bajo un Problema de Valor de Frontera
 
+    print("EJEMPLO 1")
     ODE = 42*t**5 + 2
     analitica = t**7 + t**2
     ns = [4, 6, 8, 10]
     ejemplo_PVF(ODE, analitica, 0, 0, 15, 170859600, ns, True)
     analisis_PVF(ODE, analitica, 0, 0, 15, 170859600)
+
+    print("EJEMPLO 2")
+    ODE = 10*t**7 + 3*t + 1
+    analitica = 5*t**9/36 + t**3/2 + t**2/2
+    ns = [4, 6, 8, 10]
+    ejemplo_PVF(ODE, analitica, -5, -271317.3611111111, 5, 271342.3611111111, ns, True)
+    analisis_PVF(ODE, analitica, -5, -271317.3611111111, 5, 271342.3611111111)
 
 
 main()
